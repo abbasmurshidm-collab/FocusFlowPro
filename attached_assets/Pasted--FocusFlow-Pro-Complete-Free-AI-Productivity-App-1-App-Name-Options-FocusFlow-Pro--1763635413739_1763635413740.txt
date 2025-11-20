@@ -1,0 +1,700 @@
+# FocusFlow Pro - Complete Free AI Productivity App
+
+## 1. App Name Options
+- **FocusFlow Pro** (Recommended)
+- ProductivAI Free
+- FlowState Lite
+- TaskMaster Free
+- Mindful Flow
+
+## 2. Branding & Design System
+
+**Color Theme:**
+```css
+Primary: #3B82F6 (Blue)
+Secondary: #10B981 (Emerald)
+Background: #F8FAFC
+Text: #1E293B
+Accent: #F59E0B (Amber)
+Error: #EF4444
+Success: #10B981
+Surface: #FFFFFF
+```
+
+**Typography:**
+- Headings: Inter Bold (Google Fonts)
+- Body: Inter Regular
+- Code: JetBrains Mono
+
+**Layout:**
+- Mobile-first responsive
+- Sidebar navigation (desktop) / Bottom nav (mobile)
+- Card-based design with subtle shadows
+- Dark mode ready
+
+## 3. Complete Feature Breakdown
+
+### Core Modules:
+1. **Dashboard** - Overview with stats, quick actions
+2. **Task Manager** - AI-generated tasks with categories
+3. **Focus Timer** - Pomodoro with session tracking
+4. **Weekly Planner** - Drag-drop scheduling
+5. **Habit Tracker** - Daily habits with streaks
+6. **Distraction Blocker** - Site blocking with redirect
+7. **Notes** - Rich text with AI summarization
+8. **Analytics** - Charts and insights
+9. **AI Coach** - Free AI productivity guidance
+
+## 4. Wireframes Overview
+
+**Dashboard:**
+- Stats cards (tasks completed, focus time, current streak)
+- Quick add task button
+- Recent activity feed
+- AI coach widget
+
+**Task Manager:**
+- Task list with filters (All, Today, Upcoming)
+- Add task FAB with AI generation
+- Category tags
+- Priority indicators
+
+**Focus Timer:**
+- Large timer display
+- Session controls (Start/Pause/Reset)
+- Session history
+- Progress rings
+
+## 5. Component Architecture
+
+```
+App/
+├── Layout/
+│   ├── SidebarNav
+│   ├── BottomNav
+│   └── Header
+├── Dashboard/
+│   ├── StatsGrid
+│   ├── QuickActions
+│   └── RecentActivity
+├── Tasks/
+│   ├── TaskList
+│   ├── TaskItem
+│   ├── TaskForm
+│   └── AITaskGenerator
+├── FocusTimer/
+│   ├── TimerDisplay
+│   ├── TimerControls
+│   └── SessionHistory
+├── Habits/
+│   ├── HabitGrid
+│   ├── HabitItem
+│   └── StreakCounter
+├── AI/
+│   ├── AICoach
+│   ├── AISummarizer
+│   └── AITaskGenerator
+└── Shared/
+    ├── Modal
+    ├── Button
+    ├── Input
+    └── Charts
+```
+
+## 6. Backend API Design
+
+### Authentication (Supabase Auth):
+```javascript
+POST /api/auth/signup
+POST /api/auth/login
+POST /api/auth/logout
+GET /api/auth/session
+```
+
+### Task Routes:
+```javascript
+GET /api/tasks
+POST /api/tasks
+PUT /api/tasks/:id
+DELETE /api/tasks/:id
+POST /api/tasks/ai-generate  // Free AI generation
+```
+
+### AI Routes:
+```javascript
+POST /api/ai/generate-tasks    // Groq/Gemini/Ollama
+POST /api/ai/coach-advice      // Motivational advice
+POST /api/ai/summarize-notes   // Text summarization
+POST /api/ai/analyze-productivity  // Analytics insights
+```
+
+### Focus Sessions:
+```javascript
+POST /api/focus-sessions/start
+POST /api/focus-sessions/end
+GET /api/focus-sessions/stats
+```
+
+## 7. Database Schema (Supabase Free Tier)
+
+### Users Table:
+```sql
+id: UUID (Primary Key, references auth.users)
+email: TEXT
+full_name: TEXT
+created_at: TIMESTAMPTZ
+preferences: JSONB
+```
+
+### Tasks Table:
+```sql
+id: UUID (Primary Key)
+user_id: UUID (Foreign Key)
+title: TEXT
+description: TEXT
+priority: TEXT ('low', 'medium', 'high')
+status: TEXT ('todo', 'in_progress', 'completed')
+due_date: TIMESTAMPTZ
+category: TEXT
+estimated_minutes: INTEGER
+created_at: TIMESTAMPTZ
+completed_at: TIMESTAMPTZ
+```
+
+### Focus Sessions:
+```sql
+id: UUID (Primary Key)
+user_id: UUID
+start_time: TIMESTAMPTZ
+end_time: TIMESTAMPTZ
+duration_minutes: INTEGER
+session_type: TEXT ('focus', 'break')
+task_id: UUID (Nullable)
+```
+
+### Habits:
+```sql
+id: UUID (Primary Key)
+user_id: UUID
+name: TEXT
+description: TEXT
+frequency: TEXT ('daily', 'weekly')
+current_streak: INTEGER
+best_streak: INTEGER
+created_at: TIMESTAMPTZ
+```
+
+## 8. AI Workflow Design (Free Options)
+
+### Option 1: Groq API (Llama 3.1 70B - FREE)
+```typescript
+// Fastest free option - 30K TPM free tier
+Input: User goal → Groq → Structured tasks
+Cost: Completely free within limits
+Speed: Very fast (~300 tokens/sec)
+```
+
+### Option 2: Google Gemini Flash (FREE)
+```typescript
+// Good alternative - 15 RPM free
+Input: User goal → Gemini → Structured tasks
+Cost: Free for up to 15 requests/minute
+Quality: Excellent for structured data
+```
+
+### Option 3: Ollama (Local - FREE)
+```typescript
+// Completely free, runs locally
+Input: User goal → Local model → Tasks
+Requirements: User installs Ollama desktop
+Privacy: 100% local, no API calls
+```
+
+## 9. System Architecture
+
+```
+Frontend (Next.js) 
+    ↓
+API Routes (Next.js) 
+    ↓
+Database (Supabase Free Tier)
+    ↓
+AI Provider (Groq FREE / Gemini FREE / Ollama Local)
+    ↓
+Authentication (Supabase Auth Free)
+    ↓
+File Storage (Supabase Storage Free)
+```
+
+## 10. Folder Structure
+
+```
+focusflow-pro/
+├── app/
+│   ├── (auth)/
+│   │   ├── login/
+│   │   └── signup/
+│   ├── dashboard/
+│   ├── tasks/
+│   ├── focus-timer/
+│   ├── planner/
+│   ├── habits/
+│   ├── notes/
+│   └── api/
+│       ├── auth/
+│       ├── tasks/
+│       ├── ai/
+│       └── focus-sessions/
+├── components/
+│   ├── ui/ (shadcn/ui components)
+│   ├── dashboard/
+│   ├── tasks/
+│   ├── focus-timer/
+│   └── ai/
+├── lib/
+│   ├── supabase.ts
+│   ├── ai/
+│   │   ├── groq.ts
+│   │   ├── gemini.ts
+│   │   └── ollama.ts
+│   ├── database.ts
+│   └── utils.ts
+├── types/
+├── public/
+└── package.json
+```
+
+## 11. Example Frontend Code
+
+### Dashboard with Stats:
+```tsx
+// app/dashboard/page.tsx
+'use client'
+
+import { useEffect, useState } from 'react'
+import { createClient } from '@/lib/supabase'
+import StatsGrid from '@/components/dashboard/StatsGrid'
+import QuickActions from '@/components/dashboard/QuickActions'
+
+interface DashboardStats {
+  totalTasks: number
+  completedTasks: number
+  focusTime: number
+  currentStreak: number
+}
+
+export default function Dashboard() {
+  const [stats, setStats] = useState<DashboardStats>({
+    totalTasks: 0,
+    completedTasks: 0,
+    focusTime: 0,
+    currentStreak: 0
+  })
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    loadDashboardData()
+  }, [])
+
+  const loadDashboardData = async () => {
+    const supabase = createClient()
+    
+    // Fetch tasks count
+    const { data: tasks } = await supabase
+      .from('tasks')
+      .select('id, status')
+    
+    // Fetch focus time
+    const { data: sessions } = await supabase
+      .from('focus_sessions')
+      .select('duration_minutes')
+    
+    const totalTasks = tasks?.length || 0
+    const completedTasks = tasks?.filter(t => t.status === 'completed').length || 0
+    const focusTime = sessions?.reduce((acc, s) => acc + (s.duration_minutes || 0), 0) || 0
+
+    setStats({
+      totalTasks,
+      completedTasks,
+      focusTime,
+      currentStreak: 7 // Mock for now
+    })
+    setLoading(false)
+  }
+
+  if (loading) return <div>Loading...</div>
+
+  return (
+    <div className="p-6 space-y-6">
+      <div className="flex justify-between items-center">
+        <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
+        <QuickActions />
+      </div>
+      
+      <StatsGrid stats={stats} />
+      
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <RecentActivity />
+        <AICoachWidget />
+      </div>
+    </div>
+  )
+}
+```
+
+### AI Task Generator Component:
+```tsx
+// components/tasks/AITaskGenerator.tsx
+'use client'
+
+import { useState } from 'react'
+
+interface AITaskGeneratorProps {
+  onTasksGenerated: (tasks: string[]) => void
+}
+
+export default function AITaskGenerator({ onTasksGenerated }: AITaskGeneratorProps) {
+  const [goal, setGoal] = useState('')
+  const [loading, setLoading] = useState(false)
+
+  const generateTasks = async () => {
+    if (!goal.trim()) return
+    
+    setLoading(true)
+    try {
+      const response = await fetch('/api/ai/generate-tasks', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ goal })
+      })
+      
+      const { tasks } = await response.json()
+      onTasksGenerated(tasks)
+      setGoal('')
+    } catch (error) {
+      console.error('Failed to generate tasks:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <div className="p-4 border rounded-lg bg-blue-50">
+      <h3 className="font-semibold mb-2">AI Task Generator</h3>
+      <p className="text-sm text-gray-600 mb-3">
+        Describe your goal and AI will break it into actionable tasks
+      </p>
+      
+      <textarea
+        value={goal}
+        onChange={(e) => setGoal(e.target.value)}
+        placeholder="e.g., Build a personal portfolio website..."
+        className="w-full p-3 border rounded-md mb-3 resize-none"
+        rows={3}
+      />
+      
+      <button
+        onClick={generateTasks}
+        disabled={loading || !goal.trim()}
+        className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 disabled:opacity-50"
+      >
+        {loading ? 'Generating...' : 'Generate Tasks with AI'}
+      </button>
+    </div>
+  )
+}
+```
+
+## 12. Backend API Code
+
+### AI Task Generation API (Groq):
+```typescript
+// app/api/ai/generate-tasks/route.ts
+import { NextRequest, NextResponse } from 'next/server'
+import { generateWithGroq } from '@/lib/ai/groq'
+
+export async function POST(request: NextRequest) {
+  try {
+    const { goal } = await request.json()
+
+    if (!goal) {
+      return NextResponse.json(
+        { error: 'Goal is required' },
+        { status: 400 }
+      )
+    }
+
+    const prompt = `
+    Break down the following goal into 5-7 specific, actionable tasks.
+    Return ONLY a JSON array of task objects with this structure:
+    [{ "title": "Task title", "estimatedMinutes": 60, "priority": "high|medium|low" }]
+    
+    Goal: ${goal}
+    
+    Requirements:
+    - Each task should be specific and actionable
+    - Include realistic time estimates (30-120 minutes each)
+    - Assign appropriate priorities
+    - Tasks should be in logical order
+    - Make tasks achievable within 1-2 hours each
+    `
+
+    const tasks = await generateWithGroq(prompt)
+    return NextResponse.json({ tasks })
+
+  } catch (error) {
+    console.error('AI task generation error:', error)
+    return NextResponse.json(
+      { error: 'Failed to generate tasks' },
+      { status: 500 }
+    )
+  }
+}
+```
+
+## 13. FREE AI Integrations
+
+### Option 1: Groq API (Recommended - Fast & Free)
+```typescript
+// lib/ai/groq.ts
+import Groq from 'groq-sdk'
+
+const groq = new Groq({
+  apiKey: process.env.GROQ_API_KEY!
+})
+
+export async function generateWithGroq(prompt: string): Promise<any> {
+  try {
+    const completion = await groq.chat.completions.create({
+      messages: [
+        {
+          role: 'user',
+          content: prompt
+        }
+      ],
+      model: 'llama-3.1-70b-versatile', // Or 'llama-3.1-8b-instant' for faster response
+      temperature: 0.7,
+      max_tokens: 1024,
+      stream: false
+    })
+
+    const content = completion.choices[0]?.message?.content
+    if (!content) throw new Error('No content generated')
+    
+    // Parse JSON response
+    try {
+      return JSON.parse(content)
+    } catch {
+      // Fallback: extract tasks from text
+      return extractTasksFromText(content)
+    }
+  } catch (error) {
+    console.error('Groq API error:', error)
+    throw error
+  }
+}
+
+function extractTasksFromText(text: string): any[] {
+  // Simple extraction logic as fallback
+  const lines = text.split('\n').filter(line => line.trim())
+  return lines.slice(0, 7).map((line, index) => ({
+    title: line.replace(/^\d+\.\s*/, '').trim(),
+    estimatedMinutes: 60,
+    priority: index < 2 ? 'high' : 'medium'
+  }))
+}
+```
+
+### Option 2: Google Gemini Flash (Free Tier)
+```typescript
+// lib/ai/gemini.ts
+import { GoogleGenerativeAI } from '@google/generative-ai'
+
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!)
+
+export async function generateWithGemini(prompt: string): Promise<any> {
+  try {
+    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' })
+    
+    const result = await model.generateContent(prompt)
+    const response = await result.response
+    const text = response.text()
+    
+    try {
+      return JSON.parse(text)
+    } catch {
+      return extractTasksFromText(text)
+    }
+  } catch (error) {
+    console.error('Gemini API error:', error)
+    throw error
+  }
+}
+```
+
+### Option 3: Ollama Local Inference
+```typescript
+// lib/ai/ollama.ts
+export async function generateWithOllama(prompt: string): Promise<any> {
+  try {
+    const response = await fetch('http://localhost:11434/api/generate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'llama3.1:8b', // User must have this model installed
+        prompt: prompt,
+        stream: false
+      })
+    })
+
+    if (!response.ok) throw new Error('Ollama request failed')
+    
+    const data = await response.json()
+    const text = data.response
+    
+    try {
+      return JSON.parse(text)
+    } catch {
+      return extractTasksFromText(text)
+    }
+  } catch (error) {
+    console.error('Ollama error:', error)
+    throw error
+  }
+}
+```
+
+## 14. Step-by-Step Build Instructions
+
+### Phase 1: Setup & Foundation (3-4 days)
+**Day 1: Project Setup**
+```bash
+npx create-next-app@latest focusflow-pro --typescript --tailwind --app
+cd focusflow-pro
+npm install @supabase/supabase-js groq-sdk @google/generative-ai
+npm install lucide-react clsx tailwind-merge
+```
+
+**Day 2: Supabase Configuration**
+- Create account at supabase.com
+- Create new project
+- Set up database tables using SQL from schema
+- Configure environment variables
+
+**Day 3: Authentication Setup**
+- Implement Supabase auth
+- Create login/signup pages
+- Set up protected routes
+- Add user session management
+
+### Phase 2: Core Features (10-12 days)
+**Week 1: Task Management**
+- Task CRUD operations
+- Task list with filters
+- AI task generator integration
+- Category and priority system
+
+**Week 2: Focus Timer & Habits**
+- Pomodoro timer component
+- Session tracking
+- Habit tracker with streaks
+- Basic analytics
+
+### Phase 3: Advanced Features (5-7 days)
+**Week 3: AI Integration & Polish**
+- AI coach implementation
+- Weekly planner
+- Distraction blocker
+- Dashboard completion
+
+### Phase 4: Testing & Deployment (3-4 days)
+**Week 4: Final Steps**
+- Comprehensive testing
+- Performance optimization
+- Deployment preparation
+- Documentation
+
+## 15. Deployment Guide (Vercel + Supabase Free)
+
+### 1. Prepare for Deployment:
+```bash
+# Test build locally
+npm run build
+npm start
+
+# Fix any build errors
+```
+
+### 2. Deploy to Vercel:
+```bash
+# Install Vercel CLI
+npm i -g vercel
+
+# Deploy
+vercel --prod
+```
+
+### 3. Environment Variables in Vercel:
+```
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+
+# AI APIs (Choose one primary)
+GROQ_API_KEY=your_groq_api_key
+GEMINI_API_KEY=your_gemini_api_key
+
+# Optional: Ollama (users install locally)
+```
+
+### 4. Supabase Setup:
+1. Go to supabase.com → New Project
+2. Run SQL migrations for all tables
+3. Enable Row Level Security (RLS)
+4. Set up authentication
+5. Configure CORS for your Vercel domain
+
+### 5. Free AI API Setup:
+**Groq (Recommended):**
+1. Sign up at groq.com
+2. Get free API key
+3. 30K tokens per minute free tier
+
+**Google Gemini:**
+1. Go to Google AI Studio
+2. Get free API key
+3. 15 requests per minute free
+
+### 6. Post-Deployment Checklist:
+- [ ] Test all features in production
+- [ ] Verify authentication works
+- [ ] Test AI integrations
+- [ ] Check mobile responsiveness
+- [ ] Set up error monitoring
+- [ ] Configure backups
+
+## Cost Analysis (FREE Tier)
+
+**Supabase:** 
+- Free tier: 500MB database, 1GB file storage, 50K monthly active users
+
+**Vercel:**
+- Free tier: Personal projects, 100GB bandwidth
+
+**AI APIs:**
+- Groq: Free within rate limits
+- Gemini: Free within rate limits  
+- Ollama: Completely free (local)
+
+## Development Tips
+
+1. **Start with Groq API** - Fastest and most reliable free option
+2. **Implement fallbacks** - If one AI service fails, try another
+3. **Use shadcn/ui** for consistent, beautiful components
+4. **Implement loading states** for all AI features
+5. **Add error boundaries** for robust error handling
+6. **Use React Query** for efficient data fetching
+7. **Implement optimistic updates** for better UX
+
+This complete specification provides everything needed to build a fully-featured AI productivity app using entirely free services and APIs. The architecture is optimized for solo development with clear progression and fallback options.
